@@ -3,7 +3,7 @@
     <!-- <addForm /> -->
     <h1>Events</h1>
     <event-form @add:events="addEvent" />
-    <event-table :events="events" />
+    <event-table :events="events" @delete:event="deleteEvent" />
   </div>
 </template>
 
@@ -11,7 +11,6 @@
 // import addForm from '@/components/Addform.vue'
 import EventTable from '@/components/EventTable'
 import EventForm from "@/components/EventForm";
-
 
 export default {
   name: 'app',
@@ -25,9 +24,14 @@ export default {
       const newEvent = { ...event, id };
       this.events = [...this.events, newEvent];
     },
+    deleteEvent(id) {
+      this.events = this.events.filter(
+          event => event.id !== id
+      )
+    },
     handleSubmit() {
       this.$emit('add:events', this.event)
-      console.log('handleSubmit click EvenForm.vue')
+      console.log('handleSubmit click')
     },
   },
   data() {
@@ -53,4 +57,5 @@ button {
 .small-container {
   max-width: 680px;
 }
+
 </style>
