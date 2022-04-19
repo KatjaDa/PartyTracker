@@ -32,11 +32,13 @@
         <td v-else>{{ event.address }}</td>
         <td v-if="editing === event.id">
           <input type="text" v-model="event.city">
-          <button @click="editEvent(event)">Save</button>
-          <button class="muted-button" @click="editing = null">Cancel</button>
         </td>
         <td v-else>{{ event.city }}</td>
-        <td>
+        <td v-if="editing === event.id">
+        <button @click="editEvent(event)">Save</button>
+        <button class="muted-button" @click="editing = null">Cancel</button>
+        </td>
+        <td v-else>
           <button @click="editMode(event.id)">Edit</button>
           <button @click="$emit('delete:event', event.id)">Delete</button>
         </td>
