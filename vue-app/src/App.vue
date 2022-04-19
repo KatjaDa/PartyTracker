@@ -22,20 +22,24 @@ export default {
     EventForm,
   },
   methods: {
+    // Adds event to event-table
     addEvent(event) {
       const id = 1;
       const newEvent = { ...event, id };
       this.events = [...this.events, newEvent];
     },
+    // edits event that is in the event-table
     editEvent (id, updateEvent){
       this.events = this.events.map(event =>
           event.id === id ? updateEvent : event)
     },
+    // deletes event that is in the event-table
     deleteEvent(id) {
       this.events = this.events.filter(
           event => event.id !== id
       )
     },
+    // submitting form, button add event clicked in event-form
     handleSubmit() {
       this.$emit('add:events', this.event)
       console.log('handleSubmit click')
