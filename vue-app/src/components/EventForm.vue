@@ -14,13 +14,19 @@
              @focus="clearStatus"/>
       <br>
       <label>Time</label>
-      <input v-model.trim="event.time" type="text" placeholder="add event time XX:XX"/>
+      <input v-model.trim="event.time" type="text" placeholder="add event time XX:XX"
+             :class="{ 'has-error': submitting && invalidTime }"
+             @focus="clearStatus"/>
       <br>
       <label>Address</label>
-      <input v-model.trim="event.address" type="text" placeholder="add event address"/>
+      <input v-model.trim="event.address" type="text" placeholder="add event address"
+             :class="{ 'has-error': submitting && invalidAddress }"
+             @focus="clearStatus"/>
       <br>
       <label>City</label>
-      <input v-model.trim="event.city" type="text" placeholder="add event city"/>
+      <input v-model.trim="event.city" type="text" placeholder="add event city"
+             :class="{ 'has-error': submitting && invalidCity }"
+             @focus="clearStatus"/>
       <br>
       <p v-if="error && submitting" class="error-message">❗Please fill out all required fields</p>
       <p v-if="success" class="success-message">✅ Event successfully added</p>
@@ -53,7 +59,7 @@ export default {
       this.submitting = true
       this.clearStatus()
 
-      if (this.invalidName || this.invalidEmail) {
+      if (this.invalidName || this.invalidDate || this.invalidTime || this.invalidAddress ||this.invalidCity) {
         this.error = true
         return
       }
@@ -78,12 +84,24 @@ export default {
     }
   },
     computed: {
+    // Datavalidation for form fields
+      // TÄNNE PITÄISI TEHDÄ PAREMMAT VALIDOINNIT, NYT VAAN VALIDOIDAAN ETTEI OO TYHJÄÄ..
       invalidName() {
         return this.event.name === ''
       },
       invalidDate() {
         return this.event.date === ''
       },
+      invalidTime(){
+        return this.event.time === ''
+      },
+      invalidAddress(){
+        return this.event.address === ''
+      },
+      invalidCity(){
+        return this.event.city === ''
+      },
+
     },
 
 }
