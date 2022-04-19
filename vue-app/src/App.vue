@@ -3,7 +3,10 @@
     <!-- <addForm /> -->
     <h1>Events</h1>
     <event-form @add:events="addEvent" />
-    <event-table :events="events" @delete:event="deleteEvent" />
+    <event-table
+        :events="events"
+        @delete:event="deleteEvent"
+        @edit:event="editEvent"/>
   </div>
 </template>
 
@@ -23,6 +26,10 @@ export default {
       const id = 1;
       const newEvent = { ...event, id };
       this.events = [...this.events, newEvent];
+    },
+    editEvent (id, updateEvent){
+      this.events = this.events.map(event =>
+          event.id === id ? updateEvent : event)
     },
     deleteEvent(id) {
       this.events = this.events.filter(

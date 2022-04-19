@@ -14,13 +14,30 @@
       </thead>
       <tbody>
       <tr v-for="event in events" :key="event.id">
-        <td>{{ event.name }}</td>
-        <td>{{ event.date }}</td>
-        <td>{{ event.time }}</td>
-        <td>{{ event.address }}</td>
-        <td>{{ event.city }}</td>
+        <td v-if="editing === event.id">
+          <input type="text" v-model="event.name">
+        </td>
+        <td v-else>{{ event.name }}</td>
+        <td v-if="editing === event.id">
+          <input type="text" v-model="event.date">
+        </td>
+        <td v-else>{{ event.date }}</td>
+        <td v-if="editing === event.id">
+          <input type="text" v-model="event.time">
+        </td>
+        <td v-else>{{ event.time }}</td>
+        <td v-if="editing === event.id">
+          <input type="text" v-model="event.address">
+        </td>
+        <td v-else>{{ event.address }}</td>
+        <td v-if="editing === event.id">
+          <input type="text" v-model="event.city">
+          <button @click="editEvent(event)">Save</button>
+          <button class="muted-button" @click="editing = null">Cancel</button>
+        </td>
+        <td v-else>{{ event.city }}</td>
         <td>
-          <button>Edit</button>
+          <button @click="editMode(event.id)">Edit</button>
           <button @click="$emit('delete:event', event.id)">Delete</button>
         </td>
       </tr>
@@ -35,6 +52,21 @@ export default {
   props: {
     events: Array,
   },
+  data () {
+    return {
+      editing: null,
+    }
+  },
+  methods: {
+    editMode(id){
+      this.editing = id;
+    },
+    editEvent(event){
+      if (event.name ==='' || event.date === '') return
+      this.$emit('edit:event', event.id, event)
+      this.editing = null
+    },
+  }
 }
 </script>
 
