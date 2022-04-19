@@ -7,8 +7,8 @@ CREATE TABLE location (
     id INT NOT NULL AUTO_INCREMENT,
     address VARCHAR (50),
     city VARCHAR (25),
-    xcoord DOUBLE,
-    ycoord DOUBLE,
+    x DOUBLE,
+    y DOUBLE,
     PRIMARY KEY(id)
 );
 
@@ -23,9 +23,9 @@ CREATE TABLE party (
 );
 
 --Insert baseinformation to database
-INSERT INTO location (address, city, xcoord, ycoord)
+INSERT INTO location (address, city, x, y)
 VALUES ("Suvilahti", "Helsinki", 60.166640739, 24.943536799);
-INSERT INTO location (address, city, xcoord, ycoord)
+INSERT INTO location (address, city, x, y)
 VALUES ("Ruissalo", "Turku", 60.43296293296505, 22.155743924106414);
 
 INSERT INTO party (name, date, time, location_id)
@@ -37,4 +37,4 @@ VALUES ("Ruisrock","220708", "14:00", 2);
 
 --If you want to check data from tables:
 SELECT * FROM party;
-SELECT * FROM location
+SELECT * FROM location;
