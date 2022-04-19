@@ -2,7 +2,7 @@ module.exports = {
     credentials: {
         host: "localhost",
         user: "root",
-        password: "olso",
+        password: "root",
         database: "partyevents"
     }
 }
