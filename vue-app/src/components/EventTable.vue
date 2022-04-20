@@ -35,8 +35,8 @@
         </td>
         <td v-else>{{ event.city }}</td>
         <td v-if="editing === event.id">
-        <button @click="editEvent(event)">Save</button>
-        <button class="muted-button" @click="editing = null">Cancel</button>
+        <button id="saveBtn" @click="editEvent(event)">Save</button>
+        <button id="cancelBtn" @click="editing = null">Cancel</button>
         </td>
         <td v-else>
           <button @click="editMode(event.id)">Edit</button>
