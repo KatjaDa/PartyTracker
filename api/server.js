@@ -65,7 +65,7 @@ app.get('/api/parties/date', function(req, res) {
 app.get('/api/parties/city', function(req, res) {
     let q = url.parse(req.url, true).query;
     let city = q.city;
-    let sql = "SELECT *"
+    let sql = "SELECT party.id, name, date, time, location_id, address, city, x, y"
         + " FROM party, location"
         + " WHERE party.location_id = location.id"
         + " AND location.city = ?";
