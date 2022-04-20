@@ -7,6 +7,10 @@ p{
     size: 1rem;
 }
 
+form {
+    margin-bottom: 2rem;
+}
+
 input{
     border-radius: 0.3rem;
     border-color: rgba(50, 50, 93, 0.25);
@@ -19,8 +23,11 @@ label{
     padding: 0.5rem;
 }
 
+#event-table{
+max-width: 100%;
+}
+
 button {
-    border-radius: 0.2rem;
     padding: 0.5rem;
     margin: 0.2rem;
     background-image: linear-gradient(135deg, #f34079 30%, slateblue);
@@ -33,9 +40,6 @@ button {
 
 #saveBtn, #cancelBtn{
     background-image: linear-gradient(135deg, blueviolet 30%, cornflowerblue);
-}
-form {
-    margin-bottom: 2rem;
 }
 
 .error-message {

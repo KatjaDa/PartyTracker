@@ -6,7 +6,7 @@
       <input ref="first" v-model.trim="event.name" type="text" placeholder="add event name"
           :class="{ 'has-error': submitting && invalidName }"
              @focus="clearStatus"
-             @keypress="clearStatus"/>
+             @keypress="clearStatus">
       <br>
       <label>Date</label>
       <input v-model.trim="event.date" type="text" placeholder="add event date DDMMYY"
@@ -28,7 +28,7 @@
              :class="{ 'has-error': submitting && invalidCity }"
              @focus="clearStatus"/>
       <br>
-      <p v-if="error && submitting" class="error-message">❗Please fill out all required fields</p>
+      <p v-if="error && submitting" class="error-message">❗ Form is filled incorrectly</p>
       <p v-if="success" class="success-message">✅ Event successfully added</p>
       <br>
       <button>Add Event</button>
@@ -54,17 +54,30 @@ export default {
       },
     }
   },
+
   methods: {
+    // Validating form fields max length
+      checkValidation (){
+      let valid = true;
+      if (this.event.name > 50 || this.event.time > 6 || this.event.address > 51 || this.event.city > 26){
+        valid = false;
+        console.log("validation failed, :"+this.event.name+", "+this.event.time+", "+this.event.address+", "+this.event.city)
+      }
+      return valid;
+    },
+// method for checking and handling form submitS
     handleSubmit() {
       this.submitting = true
       this.clearStatus()
-
-      if (this.invalidName || this.invalidDate || this.invalidTime || this.invalidAddress ||this.invalidCity) {
+      this.checkValidation();
+      // checking if fields are empty or form fields are incorrectly filled:
+      if (this.invalidName || this.invalidDate || this.invalidTime || this.invalidAddress ||this.invalidCity || this.checkValidation() == false) {
         this.error = true
         return
       }
 
       this.$emit('add:events', this.event)
+      // focus on firs element after adding
       this.$refs.first.focus()
       this.event = {
         name: '',
@@ -84,8 +97,7 @@ export default {
     }
   },
     computed: {
-    // Datavalidation for form fields
-      // TÄNNE PITÄISI TEHDÄ PAREMMAT VALIDOINNIT, NYT VAAN VALIDOIDAAN ETTEI OO TYHJÄÄ..
+    // Datavalidation for empty fields
       invalidName() {
         return this.event.name === ''
       },
