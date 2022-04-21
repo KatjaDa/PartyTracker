@@ -88,11 +88,11 @@ app.post('/api/parties', function(req,res) {
     let locationId;
     let sql = "SELECT *"
         + " FROM location"
-        + " WHERE address = ?";
+        + " WHERE address = ? AND city = ?";
 
     (async function() {
         try {
-            let matchingLocations = await query(sql, [req.body.address]);
+            let matchingLocations = await query(sql, [req.body.address, req.body.city]);
 
             if (matchingLocations.length == 0) {
                 sql = "INSERT INTO location (address, city, x, y)"
@@ -117,9 +117,45 @@ app.post('/api/parties', function(req,res) {
 })
 
 /**
+ * Update existing party in the database.
+ */
+app.patch('/api/parties', function(req, res) {
+    let response = false;
+    let locationId;
+    let sql = "SELECT *"
+        + " FROM location"
+        + " WHERE address = ? AND city = ?";
+
+    (async function() {
+        try {
+            let matchingLocations = await query(sql, [req.body.address, req.body.city]);
+            if (matchingLocations.length == 0) {
+                sql = "INSERT INTO location (address, city, x, y)"
+                    + " VALUES (?, ?, ?, ?)";
+                let newLocation = await query(sql, [req.body.address, req.body.city, req.body.x, req.body.y]);
+                locationId = newLocation.insertId;
+            } else {
+                locationId = matchingLocations[0].id;
+            }
+
+            sql = "UPDATE party"
+                + " SET name = ?, date = ?, time = ?, location_id = ?"
+                + " WHERE id = ?";
+            let result = await query(sql, [req.body.name, req.body.date, req.body.time, locationId, req.body.id]);
+            if (result.affectedRows != 0) {
+                response = true;
+            }
+        } catch (err) {
+            console.log("Database error. " + err);
+        }
+        res.send(response);
+    })()
+})
+
+/**
  * Delete a party with a given id
  */
-app.delete("/api/parties", function(req,res) {
+app.delete('/api/parties', function(req,res) {
     let response = false;
     let sql = "DELETE FROM party"
         + " WHERE id = ?";
