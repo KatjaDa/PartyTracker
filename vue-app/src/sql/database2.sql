@@ -38,3 +38,4 @@ VALUES ("Ruisrock","220708", "14:00", 2);
 --If you want to check data from tables:
 SELECT * FROM party;
 SELECT * FROM location;
+SELECT * FROM party, location WHERE party.location_id = location.id;
