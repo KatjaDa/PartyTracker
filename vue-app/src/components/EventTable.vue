@@ -16,6 +16,8 @@
         <th>Event time</th>
         <th>Event address</th>
         <th>Event city</th>
+        <th v-if="editing != null" >Event X coordinate</th>
+        <th v-if="editing != null" >Event Y coordinate</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -41,6 +43,12 @@
           <input type="text" v-model="event.city">
         </td>
         <td v-else>{{ event.city }}</td>
+        <td v-if="editing === event.id">
+          <input type="text" v-model="event.xcoord">
+        </td>
+        <td v-if="editing === event.id">
+          <input type="text" v-model="event.ycoord">
+        </td>
         <td v-if="editing === event.id">
         <button @click="editEvent(event)">Save</button>
         <button class="muted-button" @click="editing = null">Cancel</button>
