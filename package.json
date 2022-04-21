@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "npm run serve --prefix vue-app"
+    "startvue": "npm run serve --prefix vue-app",
+    "startnode": "nodemon api/server.js",
+    "start": "concurrently --kill-others \"npm run startvue\" \"npm run startnode\""
   },
   "repository": {
     "type": "git",
@@ -24,5 +26,8 @@
     "mysql": "^2.18.1",
     "npm": "^8.6.0"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^7.1.0"
+  }
 }

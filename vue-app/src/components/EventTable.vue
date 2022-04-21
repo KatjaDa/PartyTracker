@@ -3,6 +3,13 @@
     <p v-if="events.length < 1" class="empty-table">No events</p>
     <table v-else>
       <thead>
+
+      <label>Min date:</label>
+      <input ref="mindate" type="text" placeholder="Ex: 2022-01-01"/>
+      <br><label>Max date:</label>
+      <input ref="maxdate" type="text" placeholder="2022-12-01"/>
+      <button @click="searchEvent()">Search events</button>
+
       <tr>
         <th>Event name</th>
         <th>Event date</th>
@@ -35,8 +42,8 @@
         </td>
         <td v-else>{{ event.city }}</td>
         <td v-if="editing === event.id">
-        <button id="saveBtn" @click="editEvent(event)">Save</button>
-        <button id="cancelBtn" @click="editing = null">Cancel</button>
+        <button @click="editEvent(event)">Save</button>
+        <button class="muted-button" @click="editing = null">Cancel</button>
         </td>
         <td v-else>
           <button @click="editMode(event.id)">Edit</button>
@@ -67,6 +74,22 @@ export default {
       if (event.name ==='' || event.date === '') return
       this.$emit('edit:event', event.id, event)
       this.editing = null
+    },
+    searchEvent(){
+      let mindate = this.$refs.mindate.value;
+      let maxdate = this.$refs.maxdate.value;
+  let baseurl = "http://localhost:8081/api/parties/date";
+  let xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET",baseurl + "?min="+mindate+"&max="+maxdate,true);
+  xmlhttp.onreadystatechange = function () {
+    if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
+      /*tallentaa "specificEvents" muuttujaan saadut tiedot tietokannasta
+      * Pitäisikö taulu tyhjentää, kun tiedot etsitään, ja lisätä sen jälkeen löydetyt tiedot taulukkoon?*/
+      let specificEvents = JSON.parse(xmlhttp.responseText);
+      console.log(specificEvents);
+    }
+  }
+  xmlhttp.send();
     },
   }
 }
