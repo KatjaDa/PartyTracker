@@ -1,6 +1,5 @@
 body {
-    display: flex;
-    flex-wrap: wrap;
+
 }
 
 p{
@@ -55,5 +54,8 @@ button {
 
 /* CSS for bigger screens */
 @media (min-width: 640px) {
+.navbar, #app{
+    width: 100%
+}
 
 }
