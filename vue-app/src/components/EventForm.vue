@@ -9,12 +9,12 @@
              @keypress="clearStatus">
       <br>
       <label>Date</label>
-      <input v-model.trim="event.date" type="text" placeholder="add event date DDMMYY"
+      <input v-model.trim="event.date" type="date" placeholder="add event date DDMMYY"
              :class="{ 'has-error': submitting && invalidDate }"
              @focus="clearStatus"/>
       <br>
       <label>Time</label>
-      <input v-model.trim="event.time" type="text" placeholder="add event time XX:XX"
+      <input v-model.trim="event.time" type="time" placeholder="add event time XX:XX"
              :class="{ 'has-error': submitting && invalidTime }"
              @focus="clearStatus"/>
       <br>
@@ -29,12 +29,12 @@
              @focus="clearStatus"/>
       <br>
       <label>X-coordinate</label>
-      <input v-model.trim="event.xcoord" type="text" placeholder="add event x-coordinate"
+      <input v-model.trim="event.x" type="text" placeholder="add event x-coordinate"
              :class="{ 'has-error': submitting}"
              @focus="clearStatus"/>
       <br>
       <label>Y-coordinate</label>
-      <input v-model.trim="event.ycoord" type="text" placeholder="add event y-coordinate"
+      <input v-model.trim="event.y" type="text" placeholder="add event y-coordinate"
              :class="{ 'has-error': submitting }"
              @focus="clearStatus"/>
       <br>
@@ -61,27 +61,27 @@ export default {
         time: '',
         address: '',
         city: '',
-        xcoord:'',
-        ycoord:'',
+        x:'',
+        y:'',
       },
     }
   },
 
   methods: {
-    // Validating form fields max length
+      // Validating form fields max length
       checkValidation (){
       let valid = true;
-      if (this.event.name > 50 || this.event.time > 6 || this.event.address > 51 || this.event.city > 26){
+      if (this.event.name.length > 50 || this.event.time.length > 6 || this.event.address.length > 51 || this.event.city.length > 26){
         valid = false;
         console.log("validation failed, :"+this.event.name+", "+this.event.time+", "+this.event.address+", "+this.event.city)
       }
       // checking if x / y coordinate is empty, if so, then valid returns false
-      if (this.xcoord <= 0 || this.ycoord <= 0 ){
+      if (this.event.x <= 0 || this.event.y <= 0 || isNaN(this.event.x) || isNaN(this.event.y)) {
         valid = false;
       }
       return valid;
     },
-// method for checking and handling form submitS
+    // method for checking and handling form submitS
     handleSubmit() {
       this.submitting = true
       this.clearStatus()
@@ -93,6 +93,9 @@ export default {
       }
 
       this.$emit('add:events', this.event)
+
+      this.addEventToDatabase();
+
       // focus on firs element after adding
       this.$refs.first.focus()
       this.event = {
@@ -101,8 +104,8 @@ export default {
         time: '',
         address: '',
         city: '',
-        xcoord:'',
-        ycoord:'',
+        x:'',
+        y:'',
       }
       this.error = false
       this.success = true
@@ -112,6 +115,20 @@ export default {
     clearStatus() {
       this.success = false
       this.error = false
+    },
+
+    addEventToDatabase() {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:8081/api/parties");
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onload = function() {
+          console.log(xhr.responseText);
+        }
+
+        let eventString = JSON.stringify(this.event);
+        xhr.send(eventString);
     }
   },
     computed: {
@@ -131,9 +148,7 @@ export default {
       invalidCity(){
         return this.event.city === ''
       },
-
     },
-
 }
 </script>
 
