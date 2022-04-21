@@ -1,8 +1,11 @@
 <template>
-  <div id="app" class="small-container">
+  <div id="app">
+    <nav-bar/>
     <!-- <addForm /> -->
-    <h1>Events</h1>
+    <h1>Add event</h1>
     <event-form @add:events="addEvent" />
+
+    <h1>Events</h1>
     <event-table
         :events="events"
         @delete:event="deleteEvent"
@@ -14,10 +17,12 @@
 // import addForm from '@/components/Addform.vue'
 import EventTable from '@/components/EventTable'
 import EventForm from "@/components/EventForm";
+import NavBar from "@/components/NavBar.vue";
 
 export default {
   name: 'app',
   components: {
+    NavBar,
     EventTable,
     EventForm,
   },
@@ -60,13 +65,4 @@ export default {
 </script>
 
 <style>
-button {
-  background: #009435;
-  border: 1px solid #009435;
-}
-
-.small-container {
-  max-width: 680px;
-}
-
 </style>
