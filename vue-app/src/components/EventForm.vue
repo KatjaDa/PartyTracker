@@ -28,6 +28,16 @@
              :class="{ 'has-error': submitting && invalidCity }"
              @focus="clearStatus"/>
       <br>
+      <label>X-coordinate</label>
+      <input v-model.trim="event.xcoord" type="text" placeholder="add event x-coordinate"
+             :class="{ 'has-error': submitting}"
+             @focus="clearStatus"/>
+      <br>
+      <label>Y-coordinate</label>
+      <input v-model.trim="event.ycoord" type="text" placeholder="add event y-coordinate"
+             :class="{ 'has-error': submitting }"
+             @focus="clearStatus"/>
+      <br>
       <p v-if="error && submitting" class="error-message">❗ Form is filled incorrectly</p>
       <p v-if="success" class="success-message">✅ Event successfully added</p>
       <br>
@@ -51,6 +61,8 @@ export default {
         time: '',
         address: '',
         city: '',
+        xcoord:'',
+        ycoord:'',
       },
     }
   },
@@ -62,6 +74,10 @@ export default {
       if (this.event.name > 50 || this.event.time > 6 || this.event.address > 51 || this.event.city > 26){
         valid = false;
         console.log("validation failed, :"+this.event.name+", "+this.event.time+", "+this.event.address+", "+this.event.city)
+      }
+      // checking if x / y coordinate is empty, if so, then valid returns false
+      if (this.xcoord <= 0 || this.ycoord <= 0 ){
+        valid = false;
       }
       return valid;
     },
@@ -85,6 +101,8 @@ export default {
         time: '',
         address: '',
         city: '',
+        xcoord:'',
+        ycoord:'',
       }
       this.error = false
       this.success = true
