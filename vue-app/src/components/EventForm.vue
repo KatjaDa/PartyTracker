@@ -126,6 +126,8 @@ export default {
 
         xhr.onload = function() {
           console.log(xhr.responseText);
+          this.success = xhr.responseText;
+          console.log(this.success)
         }
 
         let eventString = JSON.stringify(this.event);
