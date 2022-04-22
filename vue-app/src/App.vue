@@ -8,10 +8,11 @@
     <event-table
         :events="events"
         @delete:event="deleteEvent"
+
         @edit:event="editEvent"
         @search:event="searchEvents"
     />
-
+      <map-map/>
     </section>
     <footer-bar/>
   </section>
@@ -22,11 +23,13 @@ import EventTable from '@/components/EventTable'
 import EventForm from "@/components/EventForm";
 import NavBar from "@/components/NavBar.vue";
 import FooterBar from "@/components/FooterBar";
+import MapMap from "@/components/Map";
 
 
 export default {
   name: 'app',
   components: {
+    MapMap,
     NavBar,
     EventTable,
     EventForm,
