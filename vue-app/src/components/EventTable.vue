@@ -1,16 +1,20 @@
 <template>
   <div id="event-table">
     <h2>Search for events</h2>
+    <label>Min date:</label>
+    <input ref="mindate" type="text" value="2022-01-01" placeholder="Ex: 2022-01-01"/>
+    <br><label>Max date:</label>
+    <input ref="maxdate" type="text" value="2022-12-01" placeholder="2022-12-01"/>
+
+    <br>
+    <button @click="searchEvents()">Search events</button>
+
+
     <p v-if="events.length < 1" class="empty-table">No events</p>
     <table v-else>
       <thead>
 
-      <label>Min date:</label>
-      <input ref="mindate" type="text" placeholder="Ex: 2022-01-01"/>
-      <br><label>Max date:</label>
-      <input ref="maxdate" type="text" placeholder="2022-12-01"/>
-      <br>
-      <button @click="searchEvent()">Search events</button>
+
       <h2>Events</h2>
       <tr>
         <th>Event name</th>
@@ -85,21 +89,11 @@ export default {
       this.$emit('edit:event', event.id, event)
       this.editing = null
     },
-    searchEvent(){
+    searchEvents(){
       let mindate = this.$refs.mindate.value;
       let maxdate = this.$refs.maxdate.value;
-  let baseurl = "http://localhost:8081/api/parties/date";
-  let xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET",baseurl + "?min="+mindate+"&max="+maxdate,true);
-  xmlhttp.onreadystatechange = function () {
-    if(xmlhttp.readyState ===4 && xmlhttp.status ===200){
-      /*tallentaa "specificEvents" muuttujaan saadut tiedot tietokannasta
-      * Pitäisikö taulu tyhjentää, kun tiedot etsitään, ja lisätä sen jälkeen löydetyt tiedot taulukkoon?*/
-      let specificEvents = JSON.parse(xmlhttp.responseText);
-      console.log(specificEvents);
-    }
-  }
-  xmlhttp.send();
+      this.$root.searchEvents(mindate, maxdate);
+
     },
   }
 }
