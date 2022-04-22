@@ -1,23 +1,25 @@
 <template>
-  <div id="app">
+  <section id="app">
     <nav-bar/>
     <!-- <addForm /> -->
-    <h1>Add event</h1>
+    <section id="content">
     <event-form @add:events="addEvent" />
 
-    <h1>Events</h1>
     <event-table
         :events="events"
         @delete:event="deleteEvent"
         @edit:event="editEvent"/>
-  </div>
+    </section>
+    <footer-bar/>
+  </section>
 </template>
 
 <script>
-// import addForm from '@/components/Addform.vue'
 import EventTable from '@/components/EventTable'
 import EventForm from "@/components/EventForm";
 import NavBar from "@/components/NavBar.vue";
+import FooterBar from "@/components/FooterBar";
+
 
 export default {
   name: 'app',
@@ -25,6 +27,7 @@ export default {
     NavBar,
     EventTable,
     EventForm,
+    FooterBar,
   },
   methods: {
     // Adds event to event-table
