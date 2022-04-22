@@ -4,11 +4,10 @@
     <!-- <addForm /> -->
     <section id="content">
     <event-form @add:events="addEvent" />
-
+    <search-event/>
     <event-table
         :events="events"
         @delete:event="deleteEvent"
-
         @edit:event="editEvent"
         @search:event="searchEvents"
     />
@@ -24,6 +23,7 @@ import EventForm from "@/components/EventForm";
 import NavBar from "@/components/NavBar.vue";
 import FooterBar from "@/components/FooterBar";
 import MapMap from "@/components/Map";
+import SearchEvent from "@/components/SearchEvent";
 
 
 export default {
@@ -34,6 +34,7 @@ export default {
     EventTable,
     EventForm,
     FooterBar,
+    SearchEvent,
   },
   methods: {
     // Adds event to event-table
