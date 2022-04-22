@@ -1,5 +1,6 @@
 <template>
   <div id="event-table">
+    <h2>Search for events</h2>
     <p v-if="events.length < 1" class="empty-table">No events</p>
     <table v-else>
       <thead>
@@ -8,8 +9,9 @@
       <input ref="mindate" type="text" placeholder="Ex: 2022-01-01"/>
       <br><label>Max date:</label>
       <input ref="maxdate" type="text" placeholder="2022-12-01"/>
+      <br>
       <button @click="searchEvent()">Search events</button>
-
+      <h2>Events</h2>
       <tr>
         <th>Event name</th>
         <th>Event date</th>
@@ -50,8 +52,8 @@
           <input type="text" v-model="event.ycoord">
         </td>
         <td v-if="editing === event.id">
-        <button @click="editEvent(event)">Save</button>
-        <button class="muted-button" @click="editing = null">Cancel</button>
+        <button id="saveBtn" @click="editEvent(event)">Save</button>
+        <button id="cancelBtn" class="muted-button" @click="editing = null">Cancel</button>
         </td>
         <td v-else>
           <button @click="editMode(event.id)">Edit</button>

@@ -1,6 +1,7 @@
 
 <template>
   <div id="event-form">
+    <h2>Add a event</h2>
     <form @submit.prevent="handleSubmit">
       <label>Event name</label>
       <input ref="first" v-model.trim="event.name" type="text" placeholder="add event name"
