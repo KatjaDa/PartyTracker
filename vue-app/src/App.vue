@@ -8,7 +8,10 @@
     <event-table
         :events="events"
         @delete:event="deleteEvent"
-        @edit:event="editEvent"/>
+
+        @edit:event="editEvent"
+        @search:event="searchEvents"
+    />
       <map-map/>
     </section>
     <footer-bar/>
@@ -55,6 +58,37 @@ export default {
       this.$emit('add:events', this.event)
       console.log('handleSubmit click')
     },
+
+    searchEvents: function (mindate, maxdate) {
+      this.events.splice(0);
+      let self = this;
+      let baseurl = "http://localhost:8081/api/parties/date";
+      let xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", baseurl + "?min=" + mindate + "&max=" + maxdate, true);
+      xmlhttp.send();
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+          /*tallentaa "specificEvents" muuttujaan saadut tiedot tietokannasta
+          * Pitäisikö taulu tyhjentää, kun tiedot etsitään, ja lisätä sen jälkeen löydetyt tiedot taulukkoon?*/
+          let specificEvents = JSON.parse(xmlhttp.responseText);
+
+          for(let i = 0; i < specificEvents.length; i++){
+            let eventId = specificEvents[i].id;
+            let eventName = specificEvents[i].name;
+            let eventDate = specificEvents[i].date;
+            console.log(eventDate);
+            let eventTime = specificEvents[i].time;
+            let eventAddress = specificEvents[i].address;
+            let eventCity = specificEvents[i].city;
+            let x = specificEvents[i].x;
+            let y = specificEvents[i].y;
+
+            self.events.push({id: eventId, name: eventName, date: eventDate.slice(0, 10), time: eventTime, address: eventAddress, city: eventCity, xcoord: x, ycoord: y});
+          }
+        }
+      }
+
+    }
   },
   data() {
     // TÄNNE PITÄISI LISÄTÄ DATA TIETOKANNASTA????
