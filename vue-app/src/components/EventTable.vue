@@ -1,19 +1,8 @@
 <template>
   <div id="event-table">
-    <h2>Search for events</h2>
-    <label>Min date:</label>
-    <input ref="mindate" type="text" value="2022-01-01" placeholder="Ex: 2022-01-01"/>
-    <br><label>Max date:</label>
-    <input ref="maxdate" type="text" value="2022-12-01" placeholder="2022-12-01"/>
-
-    <br>
-    <button @click="searchEvents()">Search events</button>
-
-
     <p v-if="events.length < 1" class="empty-table">No events</p>
     <table v-else>
       <thead>
-
 
       <h2>Events</h2>
       <tr>
@@ -88,12 +77,6 @@ export default {
       if (event.name ==='' || event.date === '') return
       this.$emit('edit:event', event.id, event)
       this.editing = null
-    },
-    searchEvents(){
-      let mindate = this.$refs.mindate.value;
-      let maxdate = this.$refs.maxdate.value;
-      this.$root.searchEvents(mindate, maxdate);
-
     },
   }
 }
