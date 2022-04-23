@@ -4,12 +4,13 @@
     <!-- <addForm /> -->
     <section id="content">
     <event-form @add:events="addEvent" />
-    <search-event/>
+    <search-event
+        @search:event="searchEvents"
+    />
     <event-table
         :events="events"
         @delete:event="deleteEvent"
         @edit:event="editEvent"
-        @search:event="searchEvents"
     />
       <map-map/>
     </section>
