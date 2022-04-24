@@ -2,6 +2,7 @@
   <section id="app">
     <nav-bar/>
     <!-- <addForm /> -->
+    <i-images/>
     <section id="content">
     <event-form @add:events="addEvent" />
     <search-event
@@ -25,11 +26,13 @@ import NavBar from "@/components/NavBar.vue";
 import FooterBar from "@/components/FooterBar";
 import MapMap from "@/components/Map";
 import SearchEvent from "@/components/SearchEvent";
+import IImages from "@/components/Images";
 
 
 export default {
   name: 'app',
   components: {
+    IImages,
     MapMap,
     NavBar,
     EventTable,
