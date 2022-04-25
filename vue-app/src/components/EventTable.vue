@@ -39,10 +39,10 @@
         </td>
         <td v-else>{{ event.city }}</td>
         <td v-if="editing === event.id">
-          <input type="text" v-model="event.xcoord">
+          <input type="text" v-model="event.x">
         </td>
         <td v-if="editing === event.id">
-          <input type="text" v-model="event.ycoord">
+          <input type="text" v-model="event.y">
         </td>
         <td v-if="editing === event.id">
         <button id="saveBtn" @click="editEvent(event)">Save</button>
@@ -92,6 +92,7 @@ export default {
       xhr.onload = function() {
         console.log(xhr.responseText);
       }
+      console.log(event);
 
       let eventString = JSON.stringify(event);
       xhr.send(eventString);
