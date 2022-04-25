@@ -124,11 +124,11 @@ app.patch('/api/parties', function(req, res) {
     let locationId;
     let sql = "SELECT *"
         + " FROM location"
-        + " WHERE address = ? AND city = ?";
+        + " WHERE address = ? AND city = ? AND x = ? AND y = ?";
 
     (async function() {
         try {
-            let matchingLocations = await query(sql, [req.body.address, req.body.city]);
+            let matchingLocations = await query(sql, [req.body.address, req.body.city, req.body.x, req.body.y]);
             if (matchingLocations.length == 0) {
                 sql = "INSERT INTO location (address, city, x, y)"
                     + " VALUES (?, ?, ?, ?)";
