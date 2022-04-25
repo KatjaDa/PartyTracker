@@ -33,7 +33,7 @@ export default {
 
     searchEventsByCity(){
       let city = this.$refs.city.value;
-      console.log(city);
+      this.$root.searchEventsByCity(city);
     }
   }
 }
