@@ -6,7 +6,7 @@
     <section id="content">
     <event-form @add:events="addEvent" />
     <search-event
-        @search:event="searchEvents"
+        @search:event="searchEventsByDate"
     />
     <event-table
         :events="events"
@@ -64,7 +64,7 @@ export default {
       console.log('handleSubmit click')
     },
 
-    searchEvents: function (mindate, maxdate) {
+    searchEventsByDate: function (mindate, maxdate) {
       this.events.splice(0);
       let self = this;
       let baseurl = "http://localhost:8081/api/parties/date";
@@ -85,10 +85,10 @@ export default {
             let eventTime = specificEvents[i].time;
             let eventAddress = specificEvents[i].address;
             let eventCity = specificEvents[i].city;
-            let x = specificEvents[i].x;
-            let y = specificEvents[i].y;
+            let xcoord = specificEvents[i].x;
+            let ycoord = specificEvents[i].y;
 
-            self.events.push({id: eventId, name: eventName, date: eventDate.slice(0, 10), time: eventTime, address: eventAddress, city: eventCity, xcoord: x, ycoord: y});
+            self.events.push({id: eventId, name: eventName, date: eventDate.slice(0, 10), time: eventTime, address: eventAddress, city: eventCity, x: xcoord, y: ycoord});
           }
         }
       }
