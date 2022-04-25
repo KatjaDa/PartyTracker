@@ -50,7 +50,7 @@
         </td>
         <td v-else>
           <button @click="editMode(event.id)">Edit</button>
-          <button @click="$emit('delete:event', event.id)">Delete</button>
+          <button @click="deleteEvent(event)">Delete</button>
         </td>
       </tr>
       </tbody>
@@ -75,9 +75,40 @@ export default {
     },
     editEvent(event){
       if (event.name ==='' || event.date === '') return
+      this.saveToDatabase(event);
       this.$emit('edit:event', event.id, event)
       this.editing = null
     },
+    deleteEvent(event) {
+      this.deleteFromDatabase(event);
+      this.$emit('delete:event', event.id);
+    },
+    saveToDatabase(event) {
+      let xhr = new XMLHttpRequest();
+      xhr.open("PATCH", "http://localhost:8081/api/parties");
+      xhr.setRequestHeader("Accept", "application/json");
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onload = function() {
+        console.log(xhr.responseText);
+      }
+
+      let eventString = JSON.stringify(event);
+      xhr.send(eventString);
+    },
+    deleteFromDatabase(event) {
+      let xhr = new XMLHttpRequest();
+      xhr.open("DELETE", "http://localhost:8081/api/parties");
+      xhr.setRequestHeader("Accept", "application/json");
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onload = function() {
+        console.log(xhr.responseText);
+      }
+
+      let eventString = JSON.stringify(event);
+      xhr.send(eventString);
+    }
   }
 }
 </script>
