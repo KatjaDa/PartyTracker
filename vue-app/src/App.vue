@@ -7,6 +7,7 @@
     <event-form @add:events="addEvent" />
     <search-event
         @search:event="searchEventsByDate"
+        @search2:event="searchEventsByCity"
     />
     <event-table
         :events="events"
@@ -66,11 +67,25 @@ export default {
 
     searchEventsByDate: function (mindate, maxdate) {
       this.events.splice(0);
-      let self = this;
       let baseurl = "http://localhost:8081/api/parties/date";
       let xmlhttp = new XMLHttpRequest();
       xmlhttp.open("GET", baseurl + "?min=" + mindate + "&max=" + maxdate, true);
       xmlhttp.send();
+      this.searchEvent(xmlhttp)
+
+    },
+
+    searchEventsByCity: function (city){
+      this.events.splice(0);
+      let baseurl = "http://localhost:8081/api/parties/city";
+      let xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", baseurl + "?city="+ city);
+      xmlhttp.send();
+      this.searchEvent(xmlhttp);
+    },
+
+    searchEvent: function(xmlhttp) {
+      let self = this;
       xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
           /*tallentaa "specificEvents" muuttujaan saadut tiedot tietokannasta
@@ -92,8 +107,9 @@ export default {
           }
         }
       }
+    },
 
-    }
+
   },
   data() {
     // TÄNNE PITÄISI LISÄTÄ DATA TIETOKANNASTA????
