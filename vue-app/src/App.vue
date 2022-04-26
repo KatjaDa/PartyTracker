@@ -19,7 +19,6 @@
         </div>
       </nav>
     </div>
-    <nav-bar/>
     <i-images/>
     <section id="content">
       <!-- Toggle between Edit mode & User mode, v-if showItem is true, Edit mode will be shown, if false then User mode -->
@@ -51,7 +50,6 @@
 <script>
 import EventTable from '@/components/EventTable'
 import EventForm from "@/components/EventForm";
-import NavBar from "@/components/NavBar.vue";
 import FooterBar from "@/components/FooterBar";
 import MapMap from "@/components/Map";
 import SearchEvent from "@/components/SearchEvent";
@@ -63,7 +61,6 @@ export default {
   components: {
     IImages,
     MapMap,
-    NavBar,
     EventTable,
     EventForm,
     FooterBar,
