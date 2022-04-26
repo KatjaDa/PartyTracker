@@ -11,6 +11,7 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="#navbar">Home</a>
+              <!-- Toggle between Edit mode & User mode -->
               <a id="AddEventNav" class="nav-link" href="#event-form" v-on:click="showItem = true">Edit mode</a>
               <a id="SearchEventNav" class="nav-link" href="#event-table" v-on:click="showItem = false">User mode</a>
             </div>
@@ -19,11 +20,16 @@
       </nav>
     </div>
     <nav-bar/>
-    <!-- <addForm /> -->
     <i-images/>
     <section id="content">
+      <!-- Toggle between Edit mode & User mode, v-if showItem is true, Edit mode will be shown, if false then User mode -->
      <section v-if="showItem" id="addEvents">
     <event-form @add:events="addEvent" />
+       <event-table
+           :events="events"
+           @delete:event="deleteEvent"
+           @edit:event="editEvent"
+       />
      </section>
       <section v-if="!showItem" id ="searchEvents">
         <search-event
