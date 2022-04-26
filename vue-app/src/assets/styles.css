@@ -36,12 +36,6 @@ label{
     width: 10rem;
 }
 
-#firstImage{
-    width:100%;
-    max-height:750px;
-}
-
-
 button {
     padding: 0.5rem;
     margin: 0.2rem;
@@ -77,10 +71,14 @@ button {
 #footer p{
     color:white;
 }
+#firstImage{
+    width:100%;
+    max-height:750px;
+}
 
 
 /* CSS for mobile */
-@media screen and (max-width: 640px)  {
+@media screen and (max-width: 640px) {
     label, input {
         width: 100%;
         margin-top: 0;
@@ -91,5 +89,10 @@ button {
         height:auto;
     }
 
-
 }
+
+
+
+
+
+

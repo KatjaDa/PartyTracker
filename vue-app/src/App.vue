@@ -1,20 +1,47 @@
 <template>
   <section id="app">
-    <nav-bar/>
-    <!-- <addForm /> -->
+    <div id =navbar>
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">PartyTracker</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="#navbar">Home</a>
+              <!-- Toggle between Edit mode & User mode -->
+              <a id="AddEventNav" class="nav-link" href="#event-form" v-on:click="showItem = true">Edit mode</a>
+              <a id="SearchEventNav" class="nav-link" href="#event-table" v-on:click="showItem = false">User mode</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
     <i-images/>
     <section id="content">
+      <!-- Toggle between Edit mode & User mode, v-if showItem is true, Edit mode will be shown, if false then User mode -->
+     <section v-if="showItem" id="addEvents">
     <event-form @add:events="addEvent" />
-    <search-event
-        @search:event="searchEventsByDate"
-        @search2:event="searchEventsByCity"
-    />
-    <event-table
+       <event-table
+           :events="events"
+           @delete:event="deleteEvent"
+           @edit:event="editEvent"
+       />
+     </section>
+      <section v-if="!showItem" id ="searchEvents">
+        <search-event
+            @search:event="searchEventsByDate"
+            @search2:event="searchEventsByCity"
+        />
+      <event-table
         :events="events"
         @delete:event="deleteEvent"
         @edit:event="editEvent"
     />
       <map-map/>
+      </section>
     </section>
     <footer-bar/>
   </section>
@@ -23,7 +50,6 @@
 <script>
 import EventTable from '@/components/EventTable'
 import EventForm from "@/components/EventForm";
-import NavBar from "@/components/NavBar.vue";
 import FooterBar from "@/components/FooterBar";
 import MapMap from "@/components/Map";
 import SearchEvent from "@/components/SearchEvent";
@@ -35,7 +61,6 @@ export default {
   components: {
     IImages,
     MapMap,
-    NavBar,
     EventTable,
     EventForm,
     FooterBar,
@@ -64,6 +89,7 @@ export default {
       this.$emit('add:events', this.event)
       console.log('handleSubmit click')
     },
+
 
     searchEventsByDate: function (mindate, maxdate) {
       this.events.splice(0);
@@ -114,6 +140,7 @@ export default {
   data() {
     // TÄNNE PITÄISI LISÄTÄ DATA TIETOKANNASTA????
     return {
+      showItem: false,
       events: [
         {id: 1, name: "Tuska", date:"220701", time:"14:00", address: "Suvilahti", city:"Helsinki", xcoord:"65.11", ycoord:"65.1"},
         {id: 2, name: "Flow", date:"220701", time:"14:00", address: "Suvilahti", city:"Helsinki", xcoord:"65.11", ycoord:"65.1"},
