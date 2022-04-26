@@ -23,9 +23,8 @@ const query = util.promisify(con.query).bind(con);
  * Get all parties.
  */
 app.get('/api/parties', function(req, res) {
-    let sql = "SELECT party.id, name, date, time, location_id, address, city, x, y"
-        + " FROM party, location"
-        + " WHERE party.location_id = location.id";
+    let sql = "SELECT *"
+        + " FROM party";
 
     (async function() {
         try {
@@ -44,10 +43,9 @@ app.get('/api/parties/date', function(req, res) {
     let q = url.parse(req.url, true).query;
     let minDate = q.min;
     let maxDate = q.max;
-    let sql = "SELECT party.id, name, date, time, location_id, address, city, x, y"
-        + " FROM party, location"
-        + " WHERE party.location_id = location.id"
-        + " AND date >= ? AND date <= ?;";
+    let sql = "SELECT *"
+        + " FROM party"
+        + " WHERE date >= ? AND date <= ?";
 
     (async function() {
         try {
@@ -65,10 +63,9 @@ app.get('/api/parties/date', function(req, res) {
 app.get('/api/parties/city', function(req, res) {
     let q = url.parse(req.url, true).query;
     let city = q.city;
-    let sql = "SELECT party.id, name, date, time, location_id, address, city, x, y"
-        + " FROM party, location"
-        + " WHERE party.location_id = location.id"
-        + " AND location.city = ?";
+    let sql = "SELECT *"
+        + " FROM party"
+        + " WHERE city = ?";
 
     (async function() {
         try {
@@ -85,27 +82,13 @@ app.get('/api/parties/city', function(req, res) {
  */
 app.post('/api/parties', function(req,res) {
     let response = false;
-    let locationId;
-    let sql = "SELECT *"
-        + " FROM location"
-        + " WHERE address = ? AND city = ?";
+    let sql = "INSERT INTO party (name, date, time, address, city, x, y)"
+        + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     (async function() {
         try {
-            let matchingLocations = await query(sql, [req.body.address, req.body.city]);
-
-            if (matchingLocations.length == 0) {
-                sql = "INSERT INTO location (address, city, x, y)"
-                    + " VALUES (?, ?, ?, ?)";
-                let newLocation = await query(sql, [req.body.address, req.body.city, req.body.x, req.body.y]);
-                locationId = newLocation.insertId;
-            } else {
-                locationId = matchingLocations[0].id;
-            }
-
-            sql = "INSERT INTO party (name, date, time, location_id)"
-                + " VALUES (?, ?, ?, ?)";
-            let result = await query(sql, [req.body.name, req.body.date, req.body.time, locationId]);
+            let result = await query(sql, [req.body.name, req.body.date, req.body.time,
+                req.body.address, req.body.city, req.body.x, req.body.y]);
             if (result.affectedRows != 0) {
                 response = true;
             }
@@ -121,27 +104,14 @@ app.post('/api/parties', function(req,res) {
  */
 app.patch('/api/parties', function(req, res) {
     let response = false;
-    let locationId;
-    let sql = "SELECT *"
-        + " FROM location"
-        + " WHERE address = ? AND city = ? AND x = ? AND y = ?";
+    let sql = "UPDATE party"
+        + " SET name = ?, date = ?, time = ?, address = ?, city = ?, x = ?, y = ?"
+        + " WHERE id = ?";
 
     (async function() {
         try {
-            let matchingLocations = await query(sql, [req.body.address, req.body.city, req.body.x, req.body.y]);
-            if (matchingLocations.length == 0) {
-                sql = "INSERT INTO location (address, city, x, y)"
-                    + " VALUES (?, ?, ?, ?)";
-                let newLocation = await query(sql, [req.body.address, req.body.city, req.body.x, req.body.y]);
-                locationId = newLocation.insertId;
-            } else {
-                locationId = matchingLocations[0].id;
-            }
-
-            sql = "UPDATE party"
-                + " SET name = ?, date = ?, time = ?, location_id = ?"
-                + " WHERE id = ?";
-            let result = await query(sql, [req.body.name, req.body.date, req.body.time, locationId, req.body.id]);
+            let result = await query(sql, [req.body.name, req.body.date, req.body.time,
+                req.body.address, req.body.city, req.body.x, req.body.y, req.body.id]);
             if (result.affectedRows != 0) {
                 response = true;
             }
