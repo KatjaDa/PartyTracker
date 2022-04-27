@@ -1,6 +1,22 @@
 # PartyTracker
 This is a app to see where all fun parties are. You can add, edit and delete events in your local database with this app.   
 If you put coordinates when adding a event, you can also see where event is located in a map.
+# REST API
+Some text about rest api here.
+
+# Database
+App has a database called PARTYEVENTS. It has a table called PARTY. Table has following columns:  
+```shell
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    date DATE NOT NULL,
+    time VARCHAR(5) NOT NULL,
+    address VARCHAR (50),
+    city VARCHAR (25),
+    x DOUBLE,
+    y DOUBLE,
+    PRIMARY KEY(id)
+```
 
 # Guide for setup
 First, make sure you have node.js and npm installed globally.
