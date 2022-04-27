@@ -45,14 +45,14 @@
           <input type="text" v-model="event.y">
         </td>
         <td v-if="editing === event.id">
-        <button id="saveBtn" @click="editEvent(event)">Save</button>
-        <button id="cancelBtn" class="muted-button" @click="editing = null">Cancel</button>
+          <button id="saveBtn" @click="editEvent(event)">Save</button>
+          <button id="cancelBtn" class="muted-button" @click="editing = null">Cancel</button>
         </td>
-        <td v-else-if="showItem" >
+        <td v-else-if="!showItem" >
           <button @click="editMode(event.id)">Edit</button>
           <button @click="deleteEvent(event)">Delete</button>
         </td>
-        <td v-else-if="!showItem">
+        <td v-else-if="showItem">
           <button @click="showOnMap(event.id)">Show on map</button>
         </td>
       </tr>
@@ -62,7 +62,6 @@
 </template>
 
 <script>
-
 export default {
   name: "event-table",
   props: {
@@ -95,12 +94,10 @@ export default {
       xhr.open("PATCH", "http://localhost:8081/api/parties");
       xhr.setRequestHeader("Accept", "application/json");
       xhr.setRequestHeader("Content-Type", "application/json");
-
       xhr.onload = function() {
         console.log(xhr.responseText);
       }
       console.log(event);
-
       let eventString = JSON.stringify(event);
       xhr.send(eventString);
     },
@@ -109,11 +106,9 @@ export default {
       xhr.open("DELETE", "http://localhost:8081/api/parties");
       xhr.setRequestHeader("Accept", "application/json");
       xhr.setRequestHeader("Content-Type", "application/json");
-
       xhr.onload = function() {
         console.log(xhr.responseText);
       }
-
       let eventString = JSON.stringify(event);
       xhr.send(eventString);
     }
