@@ -12,8 +12,8 @@
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="#navbar">Home</a>
               <!-- Toggle between Edit mode & User mode -->
-              <a id="AddEventNav" class="nav-link" href="#event-form" v-on:click="showItem = true">Edit mode</a>
-              <a id="SearchEventNav" class="nav-link" href="#event-table" v-on:click="showItem = false">User mode</a>
+              <a id="AddEventNav" class="nav-link" href="#event-form" v-on:click="showItem=true">Edit events</a>
+              <a id="SearchEventNav" class="nav-link" href="#event-table" v-on:click="showItem=false">Search events</a>
             </div>
           </div>
         </div>
@@ -61,6 +61,9 @@ import IImages from "@/components/Images";
 
 export default {
   name: 'app',
+  props:{
+
+},
   components: {
     IImages,
     MapMap,
@@ -70,6 +73,7 @@ export default {
     SearchEvent,
   },
   methods: {
+
     // Adds event to event-table
     addEvent(event) {
       const id = 1;
@@ -150,7 +154,6 @@ export default {
 
   },
   data() {
-    // TÄNNE PITÄISI LISÄTÄ DATA TIETOKANNASTA????
     return {
       showItem: false,
       events: [
