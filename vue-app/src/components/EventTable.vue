@@ -48,9 +48,12 @@
         <button id="saveBtn" @click="editEvent(event)">Save</button>
         <button id="cancelBtn" class="muted-button" @click="editing = null">Cancel</button>
         </td>
-        <td v-else>
+        <td v-else-if="showItem" >
           <button @click="editMode(event.id)">Edit</button>
           <button @click="deleteEvent(event)">Delete</button>
+        </td>
+        <td v-else-if="!showItem">
+          <button @click="showOnMap(event.id)">Show on map</button>
         </td>
       </tr>
       </tbody>
@@ -59,6 +62,7 @@
 </template>
 
 <script>
+
 export default {
   name: "event-table",
   props: {
@@ -70,6 +74,9 @@ export default {
     }
   },
   methods: {
+    showOnMap(id){
+      console.log('id is '+id);
+    },
     editMode(id){
       this.editing = id;
     },
