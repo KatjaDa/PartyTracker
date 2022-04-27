@@ -12,7 +12,7 @@
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="#navbar">Home</a>
               <!-- Toggle between Edit mode & User mode -->
-              <a id="AddEventNav" class="nav-link" href="#event-form" v-on:click="showitem=true">Edit events</a>
+              <a id="AddEventNav" class="nav-link" href="#event-form" v-on:click="showitem=true">Add & edit events</a>
               <a id="SearchEventNav" class="nav-link" href="#event-table" v-on:click="showitem=false">Search events</a>
             </div>
           </div>

@@ -1,3 +1,7 @@
+body{
+    font-family: 'Abel', sans-serif;
+
+}
 .navbar, #app{
     width: 100%
 }
@@ -12,16 +16,23 @@ margin: 2rem;
     justify-content: center;
 }
 
-p{
-    size: 1rem;
+h1{
+    font-size: 3rem;
 }
 
-form {
-    margin-bottom: 2rem;
+p,th,span,select, td, label, option, placeholder, input{
+    font-size: 1.3rem;
+}
+th{
+    padding-right: 0.6rem;
 }
 
 #event-table{
     max-width: 100%;
+}
+
+#event-table, #map {
+    padding-top: 3rem;
 }
 
 input{
@@ -91,10 +102,15 @@ button {
         height:auto;
     }
 
+    #event-table, #map {
+        padding-top: 2rem;
+    }
+
+    p,th,span,select, td, label, option, placeholder, input{
+        font-size: 1rem;
+    }
+    th{
+        padding-right: 0rem;
+    }
+
 }
-
-
-
-
-
-
