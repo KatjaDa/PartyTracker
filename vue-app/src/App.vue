@@ -12,8 +12,8 @@
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="#navbar">Home</a>
               <!-- Toggle between Edit mode & User mode -->
-              <a id="AddEventNav" class="nav-link" href="#event-form" v-on:click="showItem=true">Edit events</a>
-              <a id="SearchEventNav" class="nav-link" href="#event-table" v-on:click="showItem=false">Search events</a>
+              <a id="AddEventNav" class="nav-link" href="#event-form" v-on:click="showitem=true">Edit events</a>
+              <a id="SearchEventNav" class="nav-link" href="#event-table" v-on:click="showitem=false">Search events</a>
             </div>
           </div>
         </div>
@@ -22,7 +22,7 @@
     <i-images/>
     <section id="content">
       <!-- Toggle between Edit mode & User mode, v-if showItem is true, Edit mode will be shown, if false then User mode -->
-     <section v-if="showItem" id="addEvents">
+     <section v-if="showitem" id="addEvents">
     <event-form
         @add:events="addEvent"
         @addall:events="getAllEvents"
@@ -33,7 +33,7 @@
            @edit:event="editEvent"
        />
      </section>
-      <section v-if="!showItem" id ="searchEvents">
+      <section v-if="!showitem" id ="searchEvents">
         <search-event
             @search:event="searchEventsByDate"
             @search2:event="searchEventsByCity"
@@ -74,7 +74,6 @@ export default {
     SearchEvent,
   },
   methods: {
-
     // Adds event to event-table
     addEvent(event) {
       const id = 1;
@@ -156,7 +155,7 @@ export default {
   },
   data() {
     return {
-      showItem: false,
+      showitem: false,
       events: [
         {id: 1, name: "Tuska", date:"220701", time:"14:00", address: "Suvilahti", city:"Helsinki", xcoord:"65.11", ycoord:"65.1"},
         {id: 2, name: "Flow", date:"220701", time:"14:00", address: "Suvilahti", city:"Helsinki", xcoord:"65.11", ycoord:"65.1"},
