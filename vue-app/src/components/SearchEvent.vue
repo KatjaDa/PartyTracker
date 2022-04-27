@@ -2,13 +2,13 @@
   <h2>Search for events</h2>
 
   <span>Search criteria: </span>
-  <select>
-    <option @click="searchCriteria = 'all'">All</option>
-    <option @click="searchCriteria = 'date'">Date</option>
-    <option @click="searchCriteria = 'city'">City</option>
+  <select v-model="searchCriteria">
+    <option>All</option>
+    <option>Date</option>
+    <option>City</option>
   </select>
 
-  <section v-if="searchCriteria == 'date'">
+  <section v-if="searchCriteria == 'Date'">
     <label>Min date:</label>
     <input ref="mindate" type="date" value="2022-01-01" placeholder="Ex: 2022-01-01"/>
 
@@ -16,7 +16,7 @@
     <input ref="maxdate" type="date" value="2022-12-01" placeholder="2022-12-01"/>
   </section>
 
-  <section v-if="searchCriteria == 'city'">
+  <section v-if="searchCriteria == 'City'">
     <label>Search by city:</label>
     <input ref="city" type="text" value="Helsinki" placeholder="Ex. Helsinki"/>
   </section>
@@ -42,13 +42,13 @@ export default {
 
     searchEvents() {
       switch (this.searchCriteria) {
-        case 'all':
+        case 'All':
           this.$emit('addall:events');
           break;
-        case 'date':
+        case 'Date':
           this.searchEventsByDate();
           break;
-        case 'city':
+        case 'City':
           this.searchEventsByCity();
           break;
       }
@@ -57,7 +57,7 @@ export default {
 
   data() {
     return {
-      searchCriteria: 'all'
+      searchCriteria: 'All'
     }
   }
 }
