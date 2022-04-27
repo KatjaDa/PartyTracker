@@ -37,6 +37,7 @@
         <search-event
             @search:event="searchEventsByDate"
             @search2:event="searchEventsByCity"
+            @addall:events="getAllEvents"
         />
       <event-table
         :events="events"
