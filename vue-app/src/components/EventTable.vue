@@ -51,6 +51,7 @@
         <td v-else-if="showitem" >
           <button @click="editMode(event.id)">Edit</button>
           <button @click="deleteEvent(event)">Delete</button>
+          <button @click="showOnMap(event.id)">Show on map</button>
         </td>
         <td v-else-if="!showitem">
           <button @click="showOnMap(event.id)">Show on map</button>
