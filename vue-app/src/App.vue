@@ -23,7 +23,10 @@
     <section id="content">
       <!-- Toggle between Edit mode & User mode, v-if showItem is true, Edit mode will be shown, if false then User mode -->
      <section v-if="showItem" id="addEvents">
-    <event-form @add:events="addEvent" />
+    <event-form
+        @add:events="addEvent"
+        @addall:events="getAllEvents"
+    />
        <event-table
            :events="events"
            @delete:event="deleteEvent"
@@ -90,6 +93,15 @@ export default {
       console.log('handleSubmit click')
     },
 
+    getAllEvents: function () {
+      this.events.splice(0);
+      let baseurl = "http://localhost:8081/api/parties";
+      let xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", baseurl, true);
+      xmlhttp.send();
+      this.searchEvent(xmlhttp)
+
+    },
 
     searchEventsByDate: function (mindate, maxdate) {
       this.events.splice(0);

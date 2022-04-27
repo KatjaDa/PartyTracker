@@ -27,13 +27,12 @@ export default {
     searchEventsByDate(){
       let mindate = this.$refs.mindate.value;
       let maxdate = this.$refs.maxdate.value;
-      this.$root.searchEventsByDate(mindate, maxdate);
-
+      this.$emit('search:event', mindate, maxdate);
     },
 
     searchEventsByCity(){
       let city = this.$refs.city.value;
-      this.$root.searchEventsByCity(city);
+      this.$emit('search2:event', city);
     }
   }
 }
