@@ -77,6 +77,23 @@ app.get('/api/parties/city', function(req, res) {
     })()
 })
 
+app.get('/api/parties/id', function(req, res) {
+    let q = url.parse(req.url, true).query;
+    let id = q.id;
+    let sql = "SELECT *"
+        + " FROM party"
+        + " WHERE id = ?";
+
+    (async function() {
+        try {
+            let rows = await query(sql, [id]);
+            res.send(rows);
+        } catch (err) {
+            console.log("Database error. " + err);
+        }
+    })()
+})
+
 /**
  * Add a new party to the database.
  */
