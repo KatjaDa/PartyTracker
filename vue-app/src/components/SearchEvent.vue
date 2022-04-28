@@ -69,13 +69,17 @@ export default {
     }
   },
 
-
+  mounted(){
+    this.$emit('addall:events');
+  },
 
   data() {
     return {
       searchCriteria: 'All'
     }
-  }
+
+  },
+
 }
 
 </script>

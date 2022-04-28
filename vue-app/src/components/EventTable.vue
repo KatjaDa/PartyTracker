@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     showOnMap(id){
-      console.log('id is '+id);
+      this.emitter.emit("send-data", id);
     },
     editMode(id){
       this.editing = id;
@@ -113,7 +113,9 @@ export default {
       let eventString = JSON.stringify(event);
       xhr.send(eventString);
     }
-  }
+  },
+
+
 }
 </script>
 

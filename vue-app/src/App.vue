@@ -150,7 +150,10 @@ export default {
         }
       }
     },
-
+    mounted() {
+    this.getAllEvents();
+    console.log("heh");
+    },
 
   },
   data() {
