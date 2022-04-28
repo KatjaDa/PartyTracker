@@ -31,7 +31,7 @@ th{
     max-width: 100%;
 }
 
-#event-table, #map {
+#event-table, #map, #container{
     padding-top: 3rem;
 }
 
@@ -102,7 +102,7 @@ button {
         height:auto;
     }
 
-    #event-table, #map {
+    #event-table, #mapContainer, #container {
         padding-top: 2rem;
     }
 
