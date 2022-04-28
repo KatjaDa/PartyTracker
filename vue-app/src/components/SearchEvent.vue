@@ -18,7 +18,7 @@
 
   <section v-if="searchCriteria == 'City'">
     <label>Search by city:</label>
-    <input ref="city" type="text" value="Helsinki" placeholder="Ex. Helsinki"/>
+    <input ref="city" type="text" value="Helsinki" placeholder="Ex. Helsinki" maxlength="26"/>
   </section>
 
   <button @click="searchEvents()">Search events</button>
@@ -37,7 +37,15 @@ export default {
 
     searchEventsByCity(){
       let city = this.$refs.city.value;
-      this.$emit('search2:event', city);
+      let validationError = this.searchEventsValidation(city);
+      if (validationError == true) {
+        this.$refs.city.value = '';
+        this.$refs.city.placeholder = "Search input incorrect!";
+      }
+
+      else {
+        this.$emit('search2:event', city);
+      }
     },
 
     searchEvents() {
@@ -52,8 +60,16 @@ export default {
           this.searchEventsByCity();
           break;
       }
+    },
+    searchEventsValidation(city) {
+      if(city.length > 26) {
+        return true;
+      }
+      return false;
     }
   },
+
+
 
   data() {
     return {
