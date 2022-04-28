@@ -1,8 +1,6 @@
 # PartyTracker
-This is a app to see where all fun parties are. You can add, edit and delete events in your local database with this app.   
-If you put coordinates when adding a event, you can also see where event is located in a map.
-# REST API
-Some text about rest api here.
+This is an app to see where all fun parties are. You can add, edit and delete events in your local database with this app.   
+If you put coordinates when adding an event, you can also see where event is located in a map.
 
 # Database
 App has a database called PARTYEVENTS. It has a table called PARTY. Table has following columns:  
@@ -17,6 +15,41 @@ App has a database called PARTYEVENTS. It has a table called PARTY. Table has fo
     y DOUBLE,
     PRIMARY KEY(id)
 ```
+
+# REST API
+The database can be accessed by making REST requests.
+
+### Retrieving events with GET methods
+All the following methods will return data in JSON format.   
+
+```GET: localhost:8081/api/parties```   
+Retrieves all fields from every event.   
+
+```GET: localhost:8081/api/parties/date```   
+Retrieves all fields from events where the 'date'-field is within a specified range.   
+Example: ```localhost:8081/api/parties/date?min=2021-01-01&max=2022-12-30```
+
+```GET: localhost:8081/api/parties/city```   
+Retrieves all fields from events where the 'city'-field matches the specified string.   
+Example: ```localhost:8081/api/parties/city?city=helsinki```
+
+### Adding events with POST method
+```POST: localhost:8081/api/parties```   
+The new event must be in JSON format, and it must include all fields in the PARTY-table except for id.   
+Example: ```{"name": "Tuska", "date": "2022-07-01", "time": "14:00", "address": "Suvilahti", "city": "Helsinki",
+"x": "60.166640739", "y": "24.943536799"}```
+
+### Modifying events with PATCH method
+```PATCH: localhost:8081/api/parties```   
+Takes a JSON that must include the id of the event being modified and all fields in the PARTY-table (even if only some
+of them will be changed).  
+Example: ```{"id": "1", "name": "Tuska", "date": "2022-07-01", "time": "14:00", "address": "Suvilahti",
+"city": "Helsinki", "x": "60.166640739", "y": "24.943536799"}```
+
+### Deleting events with DELETE method
+```DELETE: localhost:8081/api/parties```   
+Takes a JSON that includes the id of the event being deleted.   
+Example: ```{"id": "1"}```
 
 # Guide for setup
 First, make sure you have node.js and npm installed globally.

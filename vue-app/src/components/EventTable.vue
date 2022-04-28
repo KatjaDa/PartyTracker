@@ -48,12 +48,11 @@
           <button id="saveBtn" @click="editEvent(event)">Save</button>
           <button id="cancelBtn" class="muted-button" @click="editing = null">Cancel</button>
         </td>
-        <td v-else-if="showitem" >
+        <td v-else-if="this.$parent.showitem" >
           <button @click="editMode(event.id)">Edit</button>
           <button @click="deleteEvent(event)">Delete</button>
-          <button @click="showOnMap(event.id)">Show on map</button>
         </td>
-        <td v-else-if="!showitem">
+        <td v-else-if="!this.$parent.showitem">
           <button @click="showOnMap(event.id)">Show on map</button>
         </td>
       </tr>
@@ -72,7 +71,6 @@ export default {
   data () {
     return {
       editing: null,
-      showitem: Boolean,
     }
   },
   methods: {
