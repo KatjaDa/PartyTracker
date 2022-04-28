@@ -97,8 +97,6 @@ export default {
 
       this.addEventToDatabase();
 
-      this.$emit('addall:events');
-
       // focus on firs element after adding
       this.$refs.first.focus()
       this.event = {
@@ -126,9 +124,11 @@ export default {
         xhr.setRequestHeader("Accept", "application/json");
         xhr.setRequestHeader("Content-Type", "application/json");
 
+        let self = this;
         xhr.onload = function() {
           console.log(xhr.responseText);
           this.success = xhr.responseText;
+          self.$emit('addall:events');
         }
 
         let eventString = JSON.stringify(this.event);
