@@ -56,6 +56,7 @@ export default {
       submitting: false,
       error: false,
       success: false,
+      databaseError: false,
       event: {
         name: '',
         date: '',
@@ -93,8 +94,6 @@ export default {
         return
       }
 
-      //this.$emit('add:events', this.event)
-
       this.addEventToDatabase();
 
       // focus on firs element after adding
@@ -127,7 +126,9 @@ export default {
         let self = this;
         xhr.onload = function() {
           console.log(xhr.responseText);
-          this.success = xhr.responseText;
+          if (xhr.responseText == "false") {
+            alert("Database error.");
+          }
           self.$emit('addall:events');
         }
 
