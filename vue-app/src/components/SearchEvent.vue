@@ -1,7 +1,6 @@
 <template>
   <h2>Search for events</h2>
-
-  <span>Search criteria: </span>
+    <span><label>Search criteria: </label> </span>
   <select v-model="searchCriteria">
     <option>All</option>
     <option>Date</option>
@@ -20,7 +19,7 @@
     <label>Search by city:</label>
     <input ref="city" type="text" value="Helsinki" placeholder="Ex. Helsinki" maxlength="26"/>
   </section>
-
+  <br>
   <button @click="searchEvents()">Search events</button>
 </template>
 
