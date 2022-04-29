@@ -20,7 +20,7 @@ h1{
     font-size: 3rem;
 }
 
-p,th,span,select, td, label, option, placeholder, input{
+p,th,span,select, td, label, option, placeholder, input, button{
     font-size: 1.3rem;
 }
 th{
@@ -44,7 +44,7 @@ input{
     widht:10rem;
 }
 
-label{
+label, select {
     padding: 0.5rem;
     width: 10rem;
 }
@@ -89,10 +89,14 @@ button {
     max-height:750px;
 }
 
+#searchEvent {
+
+}
+
 
 /* CSS for mobile */
 @media screen and (max-width: 640px) {
-    label, input {
+    label, input, select {
         width: 100%;
         margin-top: 0;
     }
@@ -106,11 +110,15 @@ button {
         padding-top: 2rem;
     }
 
-    p,th,span,select, td, label, option, placeholder, input{
+    p,th,span,select, td, label, option, placeholder, input, button{
         font-size: 1rem;
     }
     th{
         padding-right: 0rem;
+    }
+
+    select {
+        margin-bottom: 1rem;
     }
 
 }
