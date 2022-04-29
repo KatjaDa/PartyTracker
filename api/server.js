@@ -20,6 +20,26 @@ const con = mysql.createConnection({
 const query = util.promisify(con.query).bind(con);
 
 /**
+ * Get a party based on id.
+ */
+app.get('/api/parties/id', function(req, res) {
+    let q = url.parse(req.url, true).query;
+    let id = q.id;
+    let sql = "SELECT *"
+        + " FROM party"
+        + " WHERE id = ?";
+
+    (async function() {
+        try {
+            let rows = await query(sql, [id]);
+            res.send(rows);
+        } catch (err) {
+            console.log("Database error. " + err);
+        }
+    })()
+})
+
+/**
  * Get all parties.
  */
 app.get('/api/parties', function(req, res) {
@@ -70,23 +90,6 @@ app.get('/api/parties/city', function(req, res) {
     (async function() {
         try {
             let rows = await query(sql, [city]);
-            res.send(rows);
-        } catch (err) {
-            console.log("Database error. " + err);
-        }
-    })()
-})
-
-app.get('/api/parties/id', function(req, res) {
-    let q = url.parse(req.url, true).query;
-    let id = q.id;
-    let sql = "SELECT *"
-        + " FROM party"
-        + " WHERE id = ?";
-
-    (async function() {
-        try {
-            let rows = await query(sql, [id]);
             res.send(rows);
         } catch (err) {
             console.log("Database error. " + err);
