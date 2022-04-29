@@ -6,7 +6,7 @@
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { Icon }  from 'leaflet'
+import {Icon} from 'leaflet'
 
 // icons didn't appear without first deleting and then adding:
 delete Icon.Default.prototype._getIconUrl;
@@ -20,41 +20,51 @@ Icon.Default.mergeOptions({
 export default {
   name: "map-map",
   data() {
-    return{
+    return {
       center: [60.166640739, 24.9493536799],
-      eventInfo: [],
-    }},
+      map: null,
+      marker: null
+    }
+  },
   methods: {
 
     setupLeafletMap: function () {
       // Setting the map view to coordinates given in center
-      const map = L.map("mapContainer").setView(this.center, 13);
+      this.map = L.map("mapContainer").setView(this.center, 13);
       //adding map tile and views to map
       L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=3UTld98zTRPZcQ6xuZKv', {
         attribution:
             'Map data (c) <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,' +
             'Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
-      }).addTo(map);
-      // creating a event and binding marker+popup to it
+      }).addTo(this.map);
 
-
-      let eventname ="Test test";
-      let marker = L.marker([60.166640739, 24.9493536799]);
-      marker.addTo(map);
-      let text =`
-        <p>${eventname}</p>
-            <div style="text-align:center">
-            </div>`;
-    marker.bindPopup(text);
+      this.marker = L.marker([30, 30]);
+      this.marker.setOpacity(0);
+      this.map.addLayer(this.marker);
       //adding scaling to map
-      L.control.scale().addTo(map);
+
+      L.control.scale().addTo(this.map);
     },
 
-    showEventOnMap(data){
+    setupMarkerToMap: function (eventInfo) {
+      this.map.removeLayer(this.marker);
+      let eventText = "Event name: " + eventInfo[0].name + "<br>Event address: " + eventInfo[0].address + "<br>Event date: " + eventInfo[0].date + "<br>Event city: " + eventInfo[0].city + "<br>Event time: " + eventInfo[0].time;
+      this.marker = L.marker([eventInfo[0].x, eventInfo[0].y]);
+      this.map.setView([eventInfo[0].x, eventInfo[0].y], 16)
+      this.map.addLayer(this.marker);
+      let text = `
+        <p>${eventText}</p>
+            <div style="text-align:center">
+            </div>`;
+      this.marker.bindPopup(text);
+
+    },
+
+    showEventOnMap(data) {
       console.log(data);
       let baseurl = "http://localhost:8081/api/parties/id";
       let xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("GET", baseurl + "?id=" + data,true);
+      xmlhttp.open("GET", baseurl + "?id=" + data, true);
       xmlhttp.send();
       let self = this;
 
@@ -63,17 +73,25 @@ export default {
 
           let specificEvents = JSON.parse(xmlhttp.responseText);
 
-            let eventName = specificEvents[0].name;
-            let eventDate = specificEvents[0].date;
-            let eventTime = specificEvents[0].time;
-            let eventAddress = specificEvents[0].address;
-            let eventCity = specificEvents[0].city;
-            let xcoord = specificEvents[0].x;
-            let ycoord = specificEvents[0].y;
+          let eventName = specificEvents[0].name;
+          let eventDate = specificEvents[0].date;
+          let eventTime = specificEvents[0].time;
+          let eventAddress = specificEvents[0].address;
+          let eventCity = specificEvents[0].city;
+          let xcoord = specificEvents[0].x;
+          let ycoord = specificEvents[0].y;
           console.log(xcoord + " " + ycoord);
-          self.eventInfo.splice(0);
-          self.eventInfo.push({ name: eventName, date: eventDate.slice(0, 10), time: eventTime, address: eventAddress, city: eventCity, x: xcoord, y: ycoord});
-          console.log(self.eventInfo);
+          let eventInformation = [];
+          eventInformation.push({
+            name: eventName,
+            date: eventDate.slice(0, 10),
+            time: eventTime,
+            address: eventAddress,
+            city: eventCity,
+            x: xcoord,
+            y: ycoord
+          });
+          self.setupMarkerToMap(eventInformation)
 
 
         }
