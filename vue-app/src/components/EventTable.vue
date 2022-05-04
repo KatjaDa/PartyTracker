@@ -23,11 +23,11 @@
         </td>
         <td v-else>{{ event.name }}</td>
         <td v-if="editing === event.id">
-          <input type="text" v-model="event.date">
+          <input type="date" v-model="event.date">
         </td>
         <td v-else>{{ event.date }}</td>
         <td v-if="editing === event.id">
-          <input type="text" v-model="event.time">
+          <input type="time" v-model="event.time">
         </td>
         <td v-else>{{ event.time }}</td>
         <td v-if="editing === event.id">
