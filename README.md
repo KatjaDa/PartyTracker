@@ -1,9 +1,13 @@
 # PartyTracker
 This is an app to see where all fun parties are. You can add, edit and delete events in your local database with this app.   
-If you put coordinates when adding an event, you can also see where event is located in a map.
+If you put coordinates when adding an event, you can also see where event is located in a map.   
+App has couple different views:   
+<img src="https://github.com/KatjaDa/PartyTracker/blob/main/vue-app/src/assets/images/AddEvent.png" width="360" height="915">
+<img src="https://github.com/KatjaDa/PartyTracker/blob/main/vue-app/src/assets/images/SearchEvents.png" width="360" height="915">
+   
 
 # Database
-App has a database called PARTYEVENTS. It has a table called PARTY. Table has following columns:  
+App has a database called PARTYEVENTS, and one table called PARTY. Columns are:  
 ```shell
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
